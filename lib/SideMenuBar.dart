@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:track_note/ArchieveView.dart';
+import 'package:track_note/Setting.dart';
 import 'package:track_note/colors.dart';
 
 class SideMenu extends StatefulWidget {
@@ -89,7 +91,9 @@ class _SideMenuState extends State<SideMenu> {
                         topRight: Radius.circular(50),
                         bottomRight: Radius.circular(50)),
                   ))),
-          onPressed: (){},
+          onPressed: (){
+            Navigator.push(context, MaterialPageRoute(builder: (context) => ArchieveView()));
+          },
           child: Container(
             padding: EdgeInsets.all(5),
             child: Row(
@@ -123,7 +127,9 @@ class _SideMenuState extends State<SideMenu> {
                         topRight: Radius.circular(50),
                         bottomRight: Radius.circular(50)),
                   ))),
-          onPressed: (){},
+          onPressed: (){
+            Navigator.push(context, MaterialPageRoute(builder: (context) => Setting()));
+          },
           child: Container(
             padding: EdgeInsets.all(5),
             child: Row(

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:staggered_grid_view_flutter/widgets/staggered_grid_view.dart';
 import 'package:staggered_grid_view_flutter/widgets/staggered_tile.dart';
+import 'package:track_note/CreateNoteView.dart';
+import 'package:track_note/EditNoteView.dart';
 import 'package:track_note/NoteView.dart';
+import 'package:track_note/SearchPage.dart';
 import 'package:track_note/SideMenuBar.dart';
 import 'package:track_note/colors.dart';
 import 'package:staggered_grid_view_flutter/staggered_grid_view_flutter.dart';
@@ -24,10 +27,19 @@ class _HomeState extends State<Home> {
     return Scaffold(
       endDrawerEnableOpenDragGesture: true, // drawer open with a gesture
       key: drawerKey, // Defining Drawer Key
-
       drawer: SideMenu(), // Which Drawer You Want We Have Designed in SideMenu
-
       backgroundColor: bgColor,
+
+      floatingActionButton: FloatingActionButton(
+        splashColor: bgColor,
+        elevation: 1.0,
+        foregroundColor: Colors.white,
+        child: Icon(Icons.add,size: 40.0,),
+        backgroundColor: cardColor,
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => CreateNoteView()));
+        },
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
@@ -66,20 +78,27 @@ class _HomeState extends State<Home> {
                           SizedBox(
                             width: 16,
                           ),
-                          Container(
-                            height: 55,
-                            width: 200,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Search Your Notes",
-                                  style: TextStyle(
-                                      color: white.withOpacity(0.5),
-                                      fontSize: 17),
-                                ),
-                              ],
+                          
+                          
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => SearchPage()));
+                            },
+                            child: Container(
+                              height: 55,
+                              width: 200,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "Search Your Notes",
+                                    style: TextStyle(
+                                        color: white.withOpacity(0.5),
+                                        fontSize: 17),
+                                  ),
+                                ],
+                              ),
                             ),
                           )
                         ],
