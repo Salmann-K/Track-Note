@@ -8,6 +8,7 @@ import 'package:track_note/SearchPage.dart';
 import 'package:track_note/SideMenuBar.dart';
 import 'package:track_note/colors.dart';
 import 'package:staggered_grid_view_flutter/staggered_grid_view_flutter.dart';
+import 'package:track_note/services/db.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -22,6 +23,28 @@ class _HomeState extends State<Home> {
       "This Is Note This Is Note This Is Note This Is Note This Is Note This Is Note v This Is Note This Is Note This Is Note This Is Note This Is Note This Is Note This Is Note This Is Note This Is Note This Is Note v This Is Note This Is Note This Is Note This Is Note";
   String note1 = "This Is Note This Is Note";
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    createEntry();
+    getAllNotes();
+    getOneNotes();
+  }
+
+
+  Future createEntry() async{
+    await NotesDatabase.instance.InsertEntry();
+  }
+
+  Future<String?> getAllNotes() async{
+    await NotesDatabase.instance.readAllNotes();
+  }
+
+  Future<String?> getOneNotes() async{
+    await NotesDatabase.instance.readOneNote(233);
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
