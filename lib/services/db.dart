@@ -1,5 +1,7 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
+import 'package:track_note/model/MyNoteModel.dart';
+import 'package:track_note/model/MyNoteModel.dart;
 class NotesDatabase{
   static final NotesDatabase instance = NotesDatabase._init();
   static Database? _database;
@@ -19,22 +21,25 @@ class NotesDatabase{
   }
 
   Future _createDB(Database db,int version) async {
+    final idType = 'INTEGER PRIMARY KEY AUTOINCREMENT';
+    final boolType = 'BOOLEAN NOT NULL';
+    final textType = 'TEXT NOT NULL';
     await db.execute('''
     CREATE TABLE Notes(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    pin INTEGER NOT NULL,
-    title STRING NOT NULL,
-    content STRING NOT NULL,
-    createdTime STRING NOT NULL
+    ${NotesImpNames.id} $idType,
+    ${NotesImpNames.pin} $boolType,
+    ${NotesImpNames.title} $textType,
+    ${NotesImpNames.content} $textType,
+    ${NotesImpNames.createdTime} $textType
     )
     ''');
 
   }
 
-    Future<bool? > InsertEntry() async{
+    Future<Note? > InsertEntry(Note note) async{
       final db= await instance.database;
-      await db!.insert("Notes", {"pin" : 0 , "title" : "Code with salman" , "content" : "This is My note content", "createdTime" : "26 jan 2018"});
-      return true;
+      final id= await db!.insert(NotesImpNames.TableName, note.toJson());
+      return note.copy(id: id);
     }
 
     Future<String> readAllNotes() async{
@@ -53,5 +58,16 @@ class NotesDatabase{
       whereArgs: [id]
     );
     print(map);
+    }
+
+    Future updateNote(int id) async{
+    final db=await instance.database;
+
+    await db!.update("Notes", {"title" : "This is a updated Title"}, where : "id = ?",whereArgs: [id] );
+    }
+
+    Future deleteNote(int id) async{
+    final db = await instance.database;
+    await db!.delete("Notes", where: "id = ?",whereArgs: [id]);
     }
 }
