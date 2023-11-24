@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:track_note/EditNoteView.dart';
 import 'package:track_note/colors.dart';
+import 'model/MyNoteModel.dart';
 
 class NoteView extends StatefulWidget {
-  const NoteView({super.key});
-
+  Note note;
+  NoteView({required this.note});
   @override
   State<NoteView> createState() => _NoteViewState();
 }
 
 class _NoteViewState extends State<NoteView> {
-  String note =
-      "This Is Note This Is Note This Is Note This Is Note This Is Note This Is Note v This Is Note This Is Note This Is Note This Is Note This Is Note This Is Note This Is Note This Is Note This Is Note This Is Note v This Is Note This Is Note This Is Note This Is Note";
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,7 +37,7 @@ class _NoteViewState extends State<NoteView> {
           IconButton(
               splashRadius: 17,
               onPressed: (){
-                Navigator.push(context,MaterialPageRoute(builder: (context) => EditNoteView()));
+                Navigator.push(context,MaterialPageRoute(builder: (context) => EditNoteView(note : widget.note)));
               },
               icon: Icon(Icons.edit_outlined)
           ),
@@ -52,9 +50,9 @@ class _NoteViewState extends State<NoteView> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("HEADING",style: TextStyle(color: Colors.white,fontSize: 23,fontWeight: FontWeight.bold),),
+            Text(widget.note.title,style: TextStyle(color: Colors.white,fontSize: 23,fontWeight: FontWeight.bold),),
             SizedBox(height: 10,),
-            Text(note,style: TextStyle(color: Colors.white))
+            Text(widget.note.content,style: TextStyle(color: Colors.white))
           ],
         ),
       ),

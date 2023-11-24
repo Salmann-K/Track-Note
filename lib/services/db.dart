@@ -1,7 +1,6 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'package:track_note/model/MyNoteModel.dart';
-import 'package:track_note/model/MyNoteModel.dart;
 class NotesDatabase{
   static final NotesDatabase instance = NotesDatabase._init();
   static Database? _database;
@@ -42,32 +41,42 @@ class NotesDatabase{
       return note.copy(id: id);
     }
 
-    Future<String> readAllNotes() async{
+    Future<List<Note>> readAllNotes() async{
     final db=await instance.database;
-    final orderBy= 'createdTime ASC';
-    final query_result= await db!.query("Notes",orderBy: orderBy);
-    print(query_result);
-    return "Successful";
+    final orderBy= '${NotesImpNames.createdTime} ASC';
+    final query_result= await db!.query(NotesImpNames.TableName,orderBy: orderBy);
+    return query_result.map((json) => Note.fromJson(json)).toList();
     }
 
-    Future<String?> readOneNote(int id) async{
+    Future<Note?> readOneNote(int id) async{
     final db = await instance.database;
-    final map = await db!.query("Notes"
-      ,columns: ["title"] ,
-      where: 'id = ?',
+    final map = await db!.query(NotesImpNames.TableName,
+      columns: NotesImpNames.values ,
+      where: '${NotesImpNames.id} = ?',
       whereArgs: [id]
     );
-    print(map);
+    if(map.isNotEmpty){
+      return Note.fromJson(map.first);
+    }else{
+      return null;
     }
 
-    Future updateNote(int id) async{
+    }
+
+    Future updateNote(Note note) async{
     final db=await instance.database;
 
-    await db!.update("Notes", {"title" : "This is a updated Title"}, where : "id = ?",whereArgs: [id] );
+    await db!.update(NotesImpNames.TableName, note.toJson(), where : "${NotesImpNames.id} = ?",whereArgs: [note.id] );
     }
 
-    Future deleteNote(int id) async{
+    Future deleteNote(Note note) async{
     final db = await instance.database;
-    await db!.delete("Notes", where: "id = ?",whereArgs: [id]);
+    await db!.delete(NotesImpNames.TableName, where: "${NotesImpNames.id} = ?",whereArgs: [note.id]);
+    }
+
+
+    Future closeDB() async{
+    final db= await instance.database;
+    db!.close();
     }
 }

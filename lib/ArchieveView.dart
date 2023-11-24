@@ -177,7 +177,7 @@ class _ArchieveViewState extends State<ArchieveView> {
 
                   InkWell(
                     onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => NoteView()));
+                      // Navigator.push(context, MaterialPageRoute(builder: (context) => NoteView()));
                     },
                     child: Container(
                       padding: EdgeInsets.all(10),
