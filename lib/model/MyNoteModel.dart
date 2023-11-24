@@ -41,13 +41,15 @@ class Note{
         createdTime: createdTime ?? this.createdTime);
   }
 
-  static Note fromJson(Map<String,Object?> json){
-    return Note(id: json[NotesImpNames.id] as int,
-                pin : json[NotesImpNames.pin] ==1,
-                title: json[NotesImpNames.title] as String,
-                content: json[NotesImpNames.content] as String,
-                createdTime: DateTime.parse(json[NotesImpNames.createdTime] as String)
-
+  static Note fromJson(Map<String, Object?> json) {
+    return Note(
+      id: json[NotesImpNames.id] as int?,
+      pin: json[NotesImpNames.pin] == 1,
+      title: json[NotesImpNames.title] as String,
+      content: json[NotesImpNames.content] as String,
+      createdTime: json[NotesImpNames.createdTime] != null
+          ? DateTime.tryParse(json[NotesImpNames.createdTime] as String) ?? DateTime.now()
+          : DateTime.now(),
     );
   }
 

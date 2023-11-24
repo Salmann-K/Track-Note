@@ -10,6 +10,8 @@ import 'package:track_note/colors.dart';
 import 'package:staggered_grid_view_flutter/staggered_grid_view_flutter.dart';
 import 'package:track_note/services/db.dart';
 
+import 'model/MyNoteModel.dart';
+
 class Home extends StatefulWidget {
   const Home({super.key});
 
@@ -18,6 +20,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  bool isLoading = true;
+  late List<Note> notesList;
   GlobalKey<ScaffoldState> drawerKey = GlobalKey(); // Drawer key
   String note =
       "This Is Note This Is Note This Is Note This Is Note This Is Note This Is Note v This Is Note This Is Note This Is Note This Is Note This Is Note This Is Note This Is Note This Is Note This Is Note This Is Note v This Is Note This Is Note This Is Note This Is Note";
@@ -27,37 +31,37 @@ class _HomeState extends State<Home> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    createEntry();
+    createEntry(Note(pin: false, title: "Notes of salman", content: "This Is Salman Notes for future use This Is Salman Notes for future use This Is Salman Notes for future use This Is Salman Notes for future use This Is Salman Notes for future use This Is Salman Notes for future use ", createdTime: DateTime.now()));
     getAllNotes();
-    getOneNotes();
-    updateOneNOte();
-    deleteNote();
   }
 
-
-  Future createEntry() async{
-    await NotesDatabase.instance.InsertEntry();
+  Future createEntry(Note note) async{
+    await NotesDatabase.instance.InsertEntry(note);
   }
 
   Future getAllNotes() async{
-    await NotesDatabase.instance.readAllNotes();
+    this.notesList= await NotesDatabase.instance.readAllNotes();
+
+    setState(() {
+      isLoading = false;
+    });
   }
 
-  Future getOneNotes() async{
-    await NotesDatabase.instance.readOneNote(233);
+  Future getOneNotes(int id) async{
+    await NotesDatabase.instance.readOneNote(id);
   }
 
-  Future updateOneNOte() async{
-    await NotesDatabase.instance.updateNote(5);
+  Future updateOneNOte(Note note) async{
+    await NotesDatabase.instance.updateNote(note);
   }
 
-  Future deleteNote() async{
-    await NotesDatabase.instance.deleteNote(1);
+  Future deleteNote(Note note) async{
+    await NotesDatabase.instance.deleteNote(note);
   }
-  
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return isLoading ? Scaffold( backgroundColor: bgColor,  body: Center(child: CircularProgressIndicator(color: Colors.white,),),) : Scaffold(
       endDrawerEnableOpenDragGesture: true, // drawer open with a gesture
       key: drawerKey, // Defining Drawer Key
       drawer: SideMenu(), // Which Drawer You Want We Have Designed in SideMenu
@@ -111,8 +115,8 @@ class _HomeState extends State<Home> {
                           SizedBox(
                             width: 16,
                           ),
-                          
-                          
+
+
                           GestureDetector(
                             onTap: () {
                               Navigator.push(context, MaterialPageRoute(builder: (context) => SearchPage()));
@@ -208,7 +212,7 @@ class _HomeState extends State<Home> {
             EdgeInsets.symmetric(horizontal: 12, vertical: 15),
             child: StaggeredGridView.countBuilder(
               physics: NeverScrollableScrollPhysics(),
-              itemCount: 10,
+              itemCount: notesList.length,
               shrinkWrap: true,
               mainAxisSpacing: 12,
               crossAxisSpacing: 12,
@@ -218,18 +222,18 @@ class _HomeState extends State<Home> {
 
                   InkWell(
                     onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => NoteView()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => NoteView(note: notesList[index])));
                     },
                     child: Container(
                                     padding: EdgeInsets.all(10),
                                     decoration: BoxDecoration(
                       border: Border.all(color: white.withOpacity(0.4)),
-                      borderRadius: BorderRadius.circular(7)), 
+                      borderRadius: BorderRadius.circular(7)),
                     child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Heading",
+                        notesList[index].title,
                         style: TextStyle(
                             color: white,
                             fontSize: 20,
@@ -239,11 +243,9 @@ class _HomeState extends State<Home> {
                         height: 10,
                       ),
                       Text(
-                        index.isEven
-                            ? note.length > 250
-                            ? "${note.substring(0, 250)}..."
-                            : note
-                            : note1,
+                        notesList[index].content.length > 250
+                            ? "${notesList[index].content.substring(0, 250)}..."
+                            : notesList[index].content,
                         style: TextStyle(color: white),
                       )
                     ],
