@@ -6,7 +6,7 @@ import 'package:track_note/services/db.dart';
 import 'model/MyNoteModel.dart';
 
 class EditNoteView extends StatefulWidget {
-  Note note;
+  Note? note;
   EditNoteView({required this.note} );
 
   @override
@@ -22,8 +22,8 @@ class _EditNoteViewState extends State<EditNoteView> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    this.NewTitle = widget.note.title.toString();
-    this.NewNoteDet = widget.note.content.toString();
+    this.NewTitle = widget.note!.title.toString();
+    this.NewNoteDet = widget.note!.content.toString();
   }
 
   @override
@@ -31,6 +31,9 @@ class _EditNoteViewState extends State<EditNoteView> {
     return Scaffold(
       backgroundColor: bgColor,
       appBar: AppBar(
+        iconTheme: IconThemeData(
+          color: Colors.white
+        ),
         backgroundColor: bgColor,
         elevation: 0.0,
         actions: [
@@ -39,9 +42,9 @@ class _EditNoteViewState extends State<EditNoteView> {
               onPressed: () async {
                 Note newNote = Note(content: NewNoteDet,
                     title: NewTitle,
-                    createdTime: widget.note.createdTime,
+                    createdTime: widget.note!.createdTime,
                     pin: false,
-                    id: widget.note.id);
+                    id: widget.note!.id);
                 await NotesDatabase.instance.updateNote(newNote);
                 Navigator.pushReplacement(context, MaterialPageRoute(
                     builder: (context) => NoteView(note: newNote,)));
@@ -81,27 +84,29 @@ class _EditNoteViewState extends State<EditNoteView> {
             Container(
                 height: 300,
                 child: Form(
-                  child: TextFormField(
-                    onChanged: (value) {
-                      NewNoteDet = value;
-                    },
-                    initialValue: NewNoteDet,
-                    cursorColor: white,
-                    keyboardType: TextInputType.multiline,
-                    minLines: 50,
-                    maxLines: null,
-                    style: TextStyle(fontSize: 17, color: Colors.white),
-                    decoration: InputDecoration(
-                        border: InputBorder.none,
-                        focusedBorder: InputBorder.none,
-                        enabledBorder: InputBorder.none,
-                        errorBorder: InputBorder.none,
-                        disabledBorder: InputBorder.none,
-                        hintText: "Note",
-                        hintStyle: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.grey.withOpacity(0.8))),
-                  ),
+                  child: Form(
+                    child: TextFormField(
+                      onChanged: (value) {
+                        NewNoteDet = value;
+                      },
+                      initialValue: NewNoteDet,
+                      cursorColor: white,
+                      keyboardType: TextInputType.multiline,
+                      minLines: 50,
+                      maxLines: null,
+                      style: TextStyle(fontSize: 17, color: Colors.white),
+                      decoration: InputDecoration(
+                          border: InputBorder.none,
+                          focusedBorder: InputBorder.none,
+                          enabledBorder: InputBorder.none,
+                          errorBorder: InputBorder.none,
+                          disabledBorder: InputBorder.none,
+                          hintText: "Note",
+                          hintStyle: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.grey.withOpacity(0.8))),
+                    ),
+                  )
                 )
             )
 

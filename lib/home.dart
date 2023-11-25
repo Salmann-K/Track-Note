@@ -31,7 +31,7 @@ class _HomeState extends State<Home> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    createEntry(Note(pin: false, title: "Notes of salman", content: "This Is Salman Notes for future use This Is Salman Notes for future use This Is Salman Notes for future use This Is Salman Notes for future use This Is Salman Notes for future use This Is Salman Notes for future use ", createdTime: DateTime.now()));
+    // createEntry(Note(pin: false, title: "Notes of salman", content: "This Is Salman Notes for future use This Is Salman Notes for future use This Is Salman Notes for future use This Is Salman Notes for future use This Is Salman Notes for future use This Is Salman Notes for future use ", createdTime: DateTime.now()));
     getAllNotes();
   }
 

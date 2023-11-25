@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:track_note/EditNoteView.dart';
 import 'package:track_note/colors.dart';
+import 'package:track_note/services/db.dart';
+import 'home.dart';
 import 'model/MyNoteModel.dart';
 
 class NoteView extends StatefulWidget {
-  Note note;
+  Note? note;
   NoteView({required this.note});
   @override
   State<NoteView> createState() => _NoteViewState();
@@ -42,6 +44,15 @@ class _NoteViewState extends State<NoteView> {
               icon: Icon(Icons.edit_outlined)
           ),
 
+          IconButton(
+              splashRadius: 17,
+              onPressed: () async{
+                await NotesDatabase.instance.deleteNote(widget.note);
+                Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => Home()));
+              },
+              icon: Icon(Icons.delete_forever_outlined)
+          ),
+
         ],
       ),
 
@@ -50,9 +61,9 @@ class _NoteViewState extends State<NoteView> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(widget.note.title,style: TextStyle(color: Colors.white,fontSize: 23,fontWeight: FontWeight.bold),),
+            Text(widget.note!.title,style: TextStyle(color: Colors.white,fontSize: 23,fontWeight: FontWeight.bold),),
             SizedBox(height: 10,),
-            Text(widget.note.content,style: TextStyle(color: Colors.white))
+            Text(widget.note!.content,style: TextStyle(color: Colors.white))
           ],
         ),
       ),
