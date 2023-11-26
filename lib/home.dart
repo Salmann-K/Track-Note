@@ -29,9 +29,8 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    // createEntry(Note(pin: false, title: "Notes of salman", content: "This Is Salman Notes for future use This Is Salman Notes for future use This Is Salman Notes for future use This Is Salman Notes for future use This Is Salman Notes for future use This Is Salman Notes for future use ", createdTime: DateTime.now()));
+    createEntry(Note(pin: false, isArchieved: false, title: "Welcome to track notes", content: "asdfajfhashvkavahvahds", createdTime: DateTime.now()));
     getAllNotes();
   }
 

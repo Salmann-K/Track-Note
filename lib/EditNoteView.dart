@@ -42,8 +42,9 @@ class _EditNoteViewState extends State<EditNoteView> {
               onPressed: () async {
                 Note newNote = Note(content: NewNoteDet,
                     title: NewTitle,
+                    isArchieved: widget.note!.isArchieved,
                     createdTime: widget.note!.createdTime,
-                    pin: false,
+                    pin: widget.note!.pin,
                     id: widget.note!.id);
                 await NotesDatabase.instance.updateNote(newNote);
                 Navigator.pushReplacement(context, MaterialPageRoute(

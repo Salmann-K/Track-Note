@@ -5,9 +5,10 @@ class NotesImpNames{
   static final String pin = "pin";
   static final String title = "title";
   static final String content = "content";
+  static final String isArchieved="isArchieved";
   static final String createdTime = "createdTime";
   static final String TableName="Notes";
-  static final List<String> values = [id,pin,title,content,createdTime];
+  static final List<String> values = [id,isArchieved,pin,title,content,createdTime];
 }
 
 
@@ -15,6 +16,7 @@ class NotesImpNames{
 class Note{
   final int? id;
   final bool pin;
+  final bool isArchieved;
   final String title;
   final String content;
   final DateTime createdTime;
@@ -22,6 +24,7 @@ class Note{
   const Note({
   this.id,
   required this.pin,
+  required this.isArchieved,
   required this.title,
   required this.content,
   required this.createdTime,
@@ -30,12 +33,14 @@ class Note{
   Note copy({
     int? id,
     bool? pin,
+    bool? isArchieved,
     String? title,
     String? content,
     DateTime? createdTime,
   }){
     return Note(id : id ?? this.id,
         pin: pin ?? this.pin,
+        isArchieved: isArchieved ?? this.isArchieved,
         title: title ?? this.title,
         content: content ?? this.content,
         createdTime: createdTime ?? this.createdTime);
@@ -45,6 +50,7 @@ class Note{
     return Note(
       id: json[NotesImpNames.id] as int?,
       pin: json[NotesImpNames.pin] == 1,
+      isArchieved: json[NotesImpNames.isArchieved] == 1,
       title: json[NotesImpNames.title] as String,
       content: json[NotesImpNames.content] as String,
       createdTime: json[NotesImpNames.createdTime] != null
@@ -57,6 +63,7 @@ class Note{
     return{
       NotesImpNames.id : id,
       NotesImpNames.pin : pin?1:0 ,
+      NotesImpNames.isArchieved : isArchieved? 1 : 0 ,
       NotesImpNames.title : title,
       NotesImpNames.content : content,
       NotesImpNames.createdTime : createdTime.toIso8601String()

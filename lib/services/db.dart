@@ -8,7 +8,7 @@ class NotesDatabase{
 
   Future<Database?> get database async{
     if(_database != null) return _database;
-    _database = await _initializeDB('Notes.db');
+    _database = await _initializeDB('NewNotes.db');
     return _database;
   }
 
@@ -27,6 +27,7 @@ class NotesDatabase{
     CREATE TABLE Notes(
     ${NotesImpNames.id} $idType,
     ${NotesImpNames.pin} $boolType,
+    ${NotesImpNames.isArchieved} $boolType,
     ${NotesImpNames.title} $textType,
     ${NotesImpNames.content} $textType,
     ${NotesImpNames.createdTime} $textType
@@ -68,6 +69,18 @@ class NotesDatabase{
 
     await db!.update(NotesImpNames.TableName, note.toJson(), where : "${NotesImpNames.id} = ?",whereArgs: [note.id] );
     }
+
+    Future pinNote(Note? note) async{
+    final db=await instance.database;
+
+    await db!.update(NotesImpNames.TableName, {NotesImpNames.pin : !note!.pin ? 1 : 0}, where : "${NotesImpNames.id} = ?",whereArgs: [note.id] );
+    }
+
+  Future archieveNote(Note? note) async{
+    final db=await instance.database;
+
+    await db!.update(NotesImpNames.TableName, {NotesImpNames.isArchieved : !note!.pin ? 1 : 0}, where : "${NotesImpNames.id} = ?",whereArgs: [note.id] );
+  }
 
   Future<List<int>> getNoteString(String query) async{
 

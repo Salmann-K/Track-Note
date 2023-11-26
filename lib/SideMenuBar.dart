@@ -14,37 +14,38 @@ class _SideMenuState extends State<SideMenu> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-        child: Container(
-          decoration: BoxDecoration(color: bgColor),
-          child: SafeArea(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                    margin: EdgeInsets.symmetric(horizontal: 25,vertical: 16),
-                    child: Text("Track Note",
-                      style: TextStyle(color: white,fontSize: 25,fontWeight: FontWeight.bold),)
-                ),
-
-                Divider(
-                  color: white.withOpacity(0.3),
-                ),
-
-                sectionOne(),
-                SizedBox(height: 5,),
-                sectionTwo(),
-                SizedBox(height: 5,),
-                sectionSetting()
-
-
-              ],
-            ),
+      child: Container(
+        decoration: BoxDecoration(color: bgColor),
+        child: SafeArea(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                  margin: EdgeInsets.symmetric(horizontal: 25, vertical: 16),
+                  child: Text(
+                    "Track Note",
+                    style: TextStyle(
+                        color: white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 25),
+                  )),
+              Divider(
+                color: white.withOpacity(0.3),
+              ),
+              sectionOne(),
+              SizedBox(height: 5,),
+              sectionTwo(),
+              SizedBox(height: 5,),
+              sectionSetting()
+            ],
           ),
         ),
+      ),
     );
   }
 
-  Widget sectionOne(){
+  Widget sectionOne()
+  {
     return Container(
       margin: EdgeInsets.only(right: 10),
       child: TextButton(
@@ -57,8 +58,9 @@ class _SideMenuState extends State<SideMenu> {
                         topRight: Radius.circular(50),
                         bottomRight: Radius.circular(50)),
                   ))),
-          onPressed: (){},
+          onPressed: () {},
           child: Container(
+
             padding: EdgeInsets.all(5),
             child: Row(
               children: [
@@ -67,11 +69,14 @@ class _SideMenuState extends State<SideMenu> {
                   size: 25,
                   color: white.withOpacity(0.7),
                 ),
-                SizedBox(width: 27,),
-                Text("Notes",style: TextStyle(
-                    color: white.withOpacity(0.7),
-                    fontSize: 18
-                ),)
+                SizedBox(
+                  width: 27,
+                ),
+                Text(
+                  "Notes",
+                  style: TextStyle(
+                      color: white.withOpacity(0.7), fontSize: 18),
+                )
               ],
             ),
           )
@@ -79,11 +84,17 @@ class _SideMenuState extends State<SideMenu> {
     );
   }
 
-  Widget sectionTwo(){
+
+
+
+
+  Widget sectionTwo()
+  {
     return Container(
       margin: EdgeInsets.only(right: 10),
       child: TextButton(
           style: ButtonStyle(
+
               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
 
                   RoundedRectangleBorder(
@@ -91,9 +102,7 @@ class _SideMenuState extends State<SideMenu> {
                         topRight: Radius.circular(50),
                         bottomRight: Radius.circular(50)),
                   ))),
-          onPressed: (){
-            Navigator.push(context, MaterialPageRoute(builder: (context) => ArchieveView()));
-          },
+          onPressed: () {},
           child: Container(
             padding: EdgeInsets.all(5),
             child: Row(
@@ -103,11 +112,14 @@ class _SideMenuState extends State<SideMenu> {
                   size: 25,
                   color: white.withOpacity(0.7),
                 ),
-                SizedBox(width: 27,),
-                Text("Archieve",style: TextStyle(
-                    color: white.withOpacity(0.7),
-                    fontSize: 18
-                ),)
+                SizedBox(
+                  width: 27,
+                ),
+                Text(
+                  "Archive",
+                  style: TextStyle(
+                      color: white.withOpacity(0.7), fontSize: 18),
+                )
               ],
             ),
           )
@@ -115,11 +127,15 @@ class _SideMenuState extends State<SideMenu> {
     );
   }
 
-  Widget sectionSetting(){
+
+
+  Widget sectionSetting()
+  {
     return Container(
       margin: EdgeInsets.only(right: 10),
       child: TextButton(
           style: ButtonStyle(
+
               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
 
                   RoundedRectangleBorder(
@@ -127,8 +143,8 @@ class _SideMenuState extends State<SideMenu> {
                         topRight: Radius.circular(50),
                         bottomRight: Radius.circular(50)),
                   ))),
-          onPressed: (){
-            Navigator.push(context, MaterialPageRoute(builder: (context) => Setting()));
+          onPressed: () {
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>Setting()));
           },
           child: Container(
             padding: EdgeInsets.all(5),
@@ -139,11 +155,14 @@ class _SideMenuState extends State<SideMenu> {
                   size: 25,
                   color: white.withOpacity(0.7),
                 ),
-                SizedBox(width: 27,),
-                Text("Settings",style: TextStyle(
-                    color: white.withOpacity(0.7),
-                    fontSize: 18
-                ),)
+                SizedBox(
+                  width: 27,
+                ),
+                Text(
+                  "Settings",
+                  style: TextStyle(
+                      color: white.withOpacity(0.7), fontSize: 18),
+                )
               ],
             ),
           )

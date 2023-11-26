@@ -39,6 +39,7 @@ class _CreateNoteViewState extends State<CreateNoteView> {
               await NotesDatabase.instance.InsertEntry(Note(
                 title : title.text,
                 content : content.text,
+                isArchieved: false,
                 pin : false,
                 createdTime: DateTime.now()
               ));
